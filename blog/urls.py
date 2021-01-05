@@ -6,4 +6,7 @@ urlpatterns = [
     path(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/' r'(?P<post>[-\w]+)/$',
          views.post_detail,
          name='post_detail'),
+    path('<int:post_id>/share/', views.post_share, name='post_share'),
+
+
 ]
