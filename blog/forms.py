@@ -1,6 +1,6 @@
 from django import forms
 from .models import Comment
-
+from django.forms import TextInput, Textarea
 class EmailPostForm(forms.Form):
     name = forms.CharField(max_length=25)
     email = forms.EmailField()
