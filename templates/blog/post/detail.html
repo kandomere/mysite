@@ -4,10 +4,39 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
     <h1>{{ post.title }}</h1>
-    <p class="date">
+        <p class="date">
         Published {{ post.publish }} by {{ post.author }}
     </p>
     <p>
         <a href="{% url "post_share" post.id %}">Share this post</a>
     </p>
+    {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+
+
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                Comment {{ forloop.counter }} by {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+    {% empty %}
+        <p>Нет комментариев</p>
+    {% endfor %}
+    {% if new_comment %}
+        <h2>Ваш комментарий добавлен</h2>
+    {% else %}
+        <h2>Добавьте комментарий</h2>
+        <form method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Добавить комментарий"></p>
+        </form>
+    {% endif %}
+
 {% endblock %}
